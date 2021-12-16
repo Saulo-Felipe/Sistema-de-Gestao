@@ -1,0 +1,131 @@
+.container {
+  background-color: white;
+  width: 60vw;
+  margin: auto;
+  padding: 50px;
+  border-radius: 10px;
+  padding-bottom: 70px;
+}
+
+.container-form {
+  width: 50vw;
+  padding: 30px;
+}
+
+.form-set-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.one-form-input {
+  display: flex;
+  flex-flow: column;
+  margin-top: 20px;
+}
+
+.one-form-input > label {
+  font-weight: 600;
+}
+
+.input-default {
+  padding: 10px;
+  font-size: 1.05rem;
+}
+.title-client {
+  font-size: 1.5rem;
+}
+.container-client-form {
+  padding: 20px;
+  border-radius: 5px;
+}
+.gray {
+  background-color: #8080802c;
+}
+
+/* ALll classes */
+
+.error-msg {
+  color: red;
+  text-align: center;
+}
+.medium-tittle {
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 3rem;
+  margin-top: 100px;
+  font-family: 'PT Sans', sans-serif;
+  margin: 0;
+  padding: 25px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-5 {
+  margin-top: 5%;
+}
+.mt-4 {
+  margin-top: 4%;
+}
+.mt-3 {
+  margin-top: 3%;
+}
+.mt-2 {
+  margin-top: 2%;
+}
+.mt-1 {
+  margin-top: 1%;
+}
+
+.mb-5 {
+  margin-bottom: 5%;
+}
+.mb-4 {
+  margin-bottom: 4%;
+}
+.mb-3 {
+  margin-bottom: 3%;
+}
+.mb-2 {
+  margin-bottom: 2%;
+}
+.mb-1 {
+  margin-bottom: 1%;
+}
+.mr-2 {
+  margin-right: 2%;
+}
+
+.m-0 {
+  margin: 0;
+}
+.p-0 {
+  padding: 0;
+}
+
+
+
+.btn-blue {
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: #334c9b;
+  color: white;
+  margin-top: 10px;
+}
+
+.btn-red {
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: rgb(174, 0, 0);
+  color: white;
+  margin-top: 10px;
+}
+.text-right {
+  text-align: right;
+}

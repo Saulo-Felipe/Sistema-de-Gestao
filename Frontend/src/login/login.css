@@ -1,0 +1,55 @@
+body {
+  background-color: #c6d1f5 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+}
+
+#login {
+  width: 30vw;
+  background-color: white;
+  border-radius: 10px;
+  padding: 50px;
+  text-align: center;
+  height: max-content;
+  position: relative;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}
+#login h1 {
+
+}
+
+.action {
+  display: flex;
+  flex-flow: column;
+}
+.action h1 {
+  margin: 0;
+  margin-bottom: 50px;
+  font-family: 'PT Sans', sans-serif;
+}
+.action input {
+  height: 30px;
+  padding: 7px;
+  font-size: 1.1rem;
+  text-align: center;
+}
+.action button {
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: #334c9b;
+  color: white;
+  margin-top: 10px;
+}
+
+.show-password-container {
+  text-align: left;
+  display: flex;
+}
+
+.show-password-container > label {
+  margin: 0;
+  line-height: 2.3rem;
+}

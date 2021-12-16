@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+}
+.no-haref-decoration {
+  text-decoration: none;
+  color: unset;
+}
+.cards-dashboard {
+  display: flex;
+  text-align: center;
+  place-content: space-around;
+  margin-top: 150px;
+}
+.card-dashboard {
+  width: 300px;
+  height: 200px;
+  text-align: center;
+  border-radius: 10px;
+  background: white;
+  transition: 0.3s;
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 200px;
+}
+.card-dashboard:hover {
+  transform: scale(1.05);
+}
+
+.big-tittle {
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 3.5rem;
+  margin-top: 100px;
+  font-family: 'PT Sans', sans-serif;
+  margin: 0;
+  padding: 25px;
+}
