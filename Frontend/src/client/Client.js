@@ -43,7 +43,7 @@ export default function Client() {
       
       var response = await api.post("/create-client", {formState: formState}) 
 
-      if (!response.status) return alert("Erro ao cadastrar cliente.")
+      if (!response.data.status) return alert("Erro ao cadastrar cliente.")
       
       setLoading(false)
       

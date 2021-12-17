@@ -5,4 +5,5 @@ const sequelize = new Sequelize('azjfgsms', 'azjfgsms', 'foQUTkO5aTYkpCoUkiG1k4I
   dialect: 'postgres'
 })
 
+
 module.exports = sequelize

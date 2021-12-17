@@ -7,7 +7,11 @@ export default function Dashboard() {
     <div id="dashboard">
       <h1 className="big-tittle">Sistema de gestão</h1>
       <div className="cards-dashboard">
-        <div className="card-dashboard">Venda</div>
+        
+        <Link to="/venda" className="no-haref-decoration">
+          <div className="card-dashboard">Venda</div>
+        </Link>
+          
         <Link to="/client" className="no-haref-decoration">
           <div className="card-dashboard">Cliente</div>
         </Link>

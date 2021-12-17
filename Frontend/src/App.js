@@ -3,6 +3,8 @@ import Login from './login/Login'
 import Dashboard from './dashboard/Dashboard'
 import Client from './client/Client'
 import Product from './product/Product'
+import Sale from './sale/Sale'
+
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/client" element={<Client />} />
         <Route path="/produto" element={<Product />} />
+        <Route path="/venda" element={<Sale />} />
       </Routes>
     </BrowserRouter>
   );

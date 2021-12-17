@@ -1,10 +1,91 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import api from '../services/api'
 import './product.css'
 
 
 
 export default function Client() {
+
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState([])
+
+  var formState = {
+    name: "",
+    marca: "",
+    quantidade: "1",
+    custo: "",
+    revenda: "",
+  }
+
+  function changeForm(state) {
+    var id = state.id
+    var value = state.value
+
+    formState[id] = value    
+  }
+
+  async function submitClient() {
+    if (loading == false) {
+      var errorMsg = ""
+      
+      if (formState['name'].length < 2)
+        errorMsg = "Por favor, preencha com o nome do produto!"
+      else if (formState['marca'].length === 0)
+        errorMsg = "Por favor, adicione a marca do produto"
+      else if (formState['quantidade'] <= 0)
+        errorMsg = "Por favor, insira uma quantidade válidade de produtos.!"
+      else if (formState['custo'] <= 0)
+        errorMsg = "Por favor, insira um cuso válido.!"
+      else if (formState['revenda'] <= 0)
+        errorMsg = "Por favor, insira um valor de revenda válido.!"
+      
+      setMsg([false, errorMsg])
+      
+      if (errorMsg.length <= 0) {
+
+        document.querySelector(".btn-blue").setAttribute("disabled", "disabled")
+        setLoading(true)
+        
+        var response = await api.post("/create-product", {formState: formState}) 
+          
+        setLoading(false)
+        document.querySelector(".btn-blue").removeAttribute("disabled")
+
+        if (!response.status) return alert("Erro ao cadastrar cliente.")
+
+        setMsg([true, "Produto cadastrado com sucesso"])
+        clearPage()
+      } 
+
+
+      setTimeout(() => {
+        setMsg([false, ""])
+      }, 4000);
+    }
+  }
+
+  function clearPage() {
+    var keys = Object.keys(formState)
+
+    for (var c = 0; c < keys.length; c++) {
+      var currentInput = document.querySelector(`#${keys[c]}`)
+
+      if (keys[c] === 'quantidade')
+        currentInput.value = 1
+        
+      else 
+        currentInput.value = "" 
+    }
+
+    formState = {
+      name: "",
+      marca: "",
+      quantidade: "1",
+      custo: "",
+      revenda: "",
+    }
+  }
 
   return (
     <div className="">
@@ -13,37 +94,60 @@ export default function Client() {
         <div className="medium-tittle text-center p-0">Cadastro de Produto</div>
 
         <div className="one-form-input">
-          <label htmlFor="product_name">Nome do produto</label>
-          <input className="input-default" type="text" id="product_name" placeholder="Digite o nome do produto" />
+          <label htmlFor="name">Nome do produto</label>
+          <input className="input-default" type="text" id="name" placeholder="Digite o nome do produto" 
+            onChange={(event) => changeForm(event.target)}
+          />
         </div>
 
         <div className="one-form-input">
-          <label htmlFor="product_marca">Marca do produto</label>
-          <input className="input-default" type="text" id="product_marca" placeholder="Digite o nome da marca do produto" />
+          <label htmlFor="marca">Marca do produto</label>
+          <input className="input-default" type="text" id="marca" placeholder="Digite o nome da marca do produto" 
+            onChange={(event) => changeForm(event.target)}
+          />
         </div>
 
         <div className="one-form-input">
-          <label htmlFor="product_quantidade">Quantidade</label>
-          <input className="input-default" type="number" id="product_quantidade" placeholder="Digite a quantidade para ser cadastrado" defaultValue="1"/>
+          <label htmlFor="quantidade">Quantidade</label>
+          <input className="input-default" type="number" id="quantidade" placeholder="Digite a quantidade para ser cadastrado" defaultValue="1"
+            onChange={(event) => changeForm(event.target)}
+          />
         </div>
 
         <div className="container-product-form mt-1">
           <div className="one-form-input">
-            <label htmlFor="custo_produto">Custo do Produto (R$)</label>
-            <input className="input-default" type="number" id="custo_produto" placeholder="Digite o preço de custo do produto" />
+            <label htmlFor="custo">Custo do Produto (R$)</label>
+            <input className="input-default" type="number" id="custo" placeholder="Digite o preço de custo do produto" 
+              onChange={(event) => changeForm(event.target)}
+            />
           </div>
 
           <div className="one-form-input">
-            <label htmlFor="price_revenda">Preço de Revenda (R$)</label>
-            <input className="input-default" type="number" id="price_revenda" placeholder="Digite o preço de revenda do produto" />
+            <label htmlFor="revenda">Preço de Revenda (R$)</label>
+            <input className="input-default" type="number" id="revenda" placeholder="Digite o preço de revenda do produto"
+              onChange={(event) => changeForm(event.target)}
+            />
           </div>
         </div>
         
+        {
+          msg[0] 
+          ? <div className="success-msg mt-2 text-center">{msg}</div> 
+          : <div className="error-msg mt-2">{msg}</div>
+        }
+        
+
+        <div className="text-center">
+          {
+            loading ? <img src={`${require('../images/loading.gif').default}`} /> : ''
+          }
+        </div>
+
         <div className="text-right mt-4">
           <Link to="/dashboard">
             <button className="btn-red mr-2">Cancelar</button>            
           </Link>
-          <button className="btn-blue">Cadastrar</button>
+          <button className="btn-blue" onClick={() => submitClient()} >Cadastrar</button>
         </div>
 
 

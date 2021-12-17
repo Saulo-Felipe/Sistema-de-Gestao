@@ -116,6 +116,15 @@
   color: white;
   margin-top: 10px;
 }
+.btn-green {
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: #008b17;
+  color: white;
+  margin-top: 10px;
+}
 
 .btn-red {
   border: none;

@@ -5,3 +5,7 @@
 .container-product-form .one-form-input {
   width: 49%;
 }
+
+.success-msg {
+  color: green;
+}
