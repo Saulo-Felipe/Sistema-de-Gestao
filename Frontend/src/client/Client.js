@@ -57,10 +57,10 @@ export default function Client() {
 
 
   return (
-    <div className="">
+    <div className="w-100">
 
       <div className="container-form container mt-1 ">
-        <div className="medium-tittle text-center p-0">Cadastro de Cliente</div>
+        <div className="small-title text-center p-0">Cadastro de Cliente</div>
 
         <div className="one-form-input">
           <label htmlFor="name">Nome Completo</label>

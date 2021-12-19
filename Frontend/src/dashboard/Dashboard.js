@@ -4,21 +4,46 @@ import './dashboard.css'
 
 export default function Dashboard() {
   return (
-    <div id="dashboard">
-      <h1 className="big-tittle">Sistema de gestão</h1>
-      <div className="cards-dashboard">
-        
-        <Link to="/venda" className="no-haref-decoration">
-          <div className="card-dashboard">Venda</div>
-        </Link>
-          
-        <Link to="/client" className="no-haref-decoration">
-          <div className="card-dashboard">Cliente</div>
-        </Link>
+    <div id="dashboard" className="w-100">
+      
+      <div className="dashboard-content">
 
-        <Link to="/produto" className="no-haref-decoration">
-          <div className="card-dashboard">Produto</div>
-        </Link>
+        <div className="cards-dashboard">          
+          <h1 className="big-title">Sistema de gestão</h1>
+          <div>
+            
+            <div className="dashboard-card-center">
+              <Link to="/venda" className="no-haref-decoration href-dashboard-card">
+                <div className="card-dashboard">Venda <i class="fas fa-hand-holding-usd"></i></div>
+              </Link>
+            </div>
+          
+            <div className="dashboard-card-center">
+              <Link to="/client" className="no-haref-decoration href-dashboard-card">
+                <div className="card-dashboard">Cliente <i class="fas fa-users"></i></div>
+              </Link>    
+            </div>
+
+            <div className="dashboard-card-center">
+              <Link to="/produto" className="no-haref-decoration href-dashboard-card">
+                <div className="card-dashboard">Produto <i class="fas fa-store"></i></div>
+              </Link>
+            </div>
+
+            <div className="dashboard-card-center">
+              <Link to="/produto" className="no-haref-decoration href-dashboard-card" style={{marginTop: "20%"}}>
+                <div className="card-dashboard">Contas <i class="fas fa-minus-circle"></i></div>
+              </Link>
+            </div>
+
+            <div className="dashboard-card-center">
+              <Link to="/estoque" className="no-haref-decoration href-dashboard-card" style={{marginTop: "20%"}}>
+                <div className="card-dashboard">Estoque <i class="fas fa-boxes"></i></div>
+              </Link>
+            </div>
+
+          </div>
+        </div>
 
       </div>
     </div>

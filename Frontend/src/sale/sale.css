@@ -1,3 +1,6 @@
+* {
+  font-family: 'PT Sans';
+}
 .select-form {
   height: 25px;
   padding: 20px;
@@ -14,6 +17,12 @@
 .grid-container {
   width: 75vw;
   margin: auto;
+  padding: 50px;
+  margin-top: 3%;
+  border-radius: 10px;
+}
+.sale-title {
+  margin-bottom: 40px !important;
 }
 
 .content-sale {
@@ -55,7 +64,7 @@
   border-color: hsl(0, 0%, 80%);
   border: solid 1px hsl(0, 0%, 80%);
   text-align: center;
-  height: 33px;;
+  height: 33px;
 }
 .text-end {
   text-align: right;
@@ -83,6 +92,7 @@
 .product-sell {
   display: flex;
   text-align: center;
+  position: relative;
 }
 
 .table-sale-title {
@@ -103,15 +113,129 @@
   border-left: solid 1px rgba(128, 128, 128, 0.542);
 }
 .card-sale-qtd {
-  width: 25%;
+  width: 10%;
   line-height: 28px;
   border-right: solid 1px rgba(128, 128, 128, 0.542);
   border-top: solid 1px rgba(128, 128, 128, 0.542);
 }
 .card-sale-valor {
-  width: 25%;
+  width: 20%;
+  line-height: 28px;
+  border-right: solid 1px rgba(128, 128, 128, 0.542);
+  border-top: solid 1px rgba(128, 128, 128, 0.542);
+}
+.card-sale-valor-final {
+  width: 20%;
   line-height: 28px;
   border-right: solid 1px rgba(128, 128, 128, 0.542);
   border-top: solid 1px rgba(128, 128, 128, 0.542);
 }
 
+.small-title {
+  font-size: 2.5rem;
+  margin: 0;
+}
+.grid-container button {
+  border-radius: 5px;
+  transition: 0.5s;
+}
+.grid-container button:hover {
+  opacity: 0.7;
+}
+.delete-card {
+  position: absolute;
+  background-color: rgba(196, 0, 0, 0.361);
+  color: white;
+  width: 100%;
+  height: 100%;
+  line-height: 30px;
+  transition: 0.05s;
+  transform: scale(0);
+  cursor: pointer;
+}
+.product-sell:hover .delete-card {
+  transform: scale(1);
+}
+.msg-alerts {
+  background-color: rgba(255, 255, 255, 0.528);
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.input-form {
+  width: 100%;
+  border-radius: 4px;
+  border-color: hsl(0, 0%, 80%);
+  border: solid 1px hsl(0, 0%, 80%);
+  text-align: center;
+  height: 33px;
+
+}
+.details-sale {
+  display: flex;
+  justify-content: space-between;
+}
+.details-sale div {
+  width: 49%;
+  align-self: center;
+}
+.first-details-sale {
+  border-right: solid 1px rgba(128, 128, 128, 0.37);
+}
+.subtotal-small {
+  font-size: 1.5rem;
+}
+
+/* Finale sale */
+
+
+.finalize-container-sale {
+  width: 75%;
+  margin: auto;
+  margin-top: 120px;
+  padding: 40px;
+}
+.finale-sale-total {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+#pay-value {
+  width: 50%;
+  padding: 10px;
+  font-size: 1.2rem;
+  margin-top: 5px;
+}
+.finalize-container-sale label {
+  font-size: 1.4rem;
+}
+.finalize-btn {
+  margin-top: 20px;
+  padding: 10px;
+  width: 100%;
+  background-color: green;
+  color: white;
+  font-size: 1rem;
+  border: none;
+}
+.finalize-informations {
+  height: 70px;
+  background-color: rgba(128, 128, 128, 0.27);
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.text-red {
+  color: red;
+}
+.text-yellow {
+  color: rgb(255, 131, 15);
+}
+.text-green {
+  color: green;
+}

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import api from '../services/api'
 import './product.css'
 
@@ -13,7 +13,6 @@ export default function Client() {
   var formState = {
     name: "",
     marca: "",
-    quantidade: "1",
     custo: "",
     revenda: "",
   }
@@ -22,7 +21,7 @@ export default function Client() {
     var id = state.id
     var value = state.value
 
-    formState[id] = value    
+    formState[id] = value
   }
 
   async function submitClient() {
@@ -33,8 +32,6 @@ export default function Client() {
         errorMsg = "Por favor, preencha com o nome do produto!"
       else if (formState['marca'].length === 0)
         errorMsg = "Por favor, adicione a marca do produto"
-      else if (formState['quantidade'] <= 0)
-        errorMsg = "Por favor, insira uma quantidade válidade de produtos.!"
       else if (formState['custo'] <= 0)
         errorMsg = "Por favor, insira um cuso válido.!"
       else if (formState['revenda'] <= 0)
@@ -71,27 +68,22 @@ export default function Client() {
     for (var c = 0; c < keys.length; c++) {
       var currentInput = document.querySelector(`#${keys[c]}`)
 
-      if (keys[c] === 'quantidade')
-        currentInput.value = 1
-        
-      else 
-        currentInput.value = "" 
+      currentInput.value = "" 
     }
 
     formState = {
       name: "",
       marca: "",
-      quantidade: "1",
       custo: "",
       revenda: "",
     }
   }
 
   return (
-    <div className="">
+    <div className="w-100">
 
       <div className="container-form container mt-5 ">
-        <div className="medium-tittle text-center p-0">Cadastro de Produto</div>
+        <div className="small-title text-center p-0">Cadastro de Produto</div>
 
         <div className="one-form-input">
           <label htmlFor="name">Nome do produto</label>
@@ -107,17 +99,10 @@ export default function Client() {
           />
         </div>
 
-        <div className="one-form-input">
-          <label htmlFor="quantidade">Quantidade</label>
-          <input className="input-default" type="number" id="quantidade" placeholder="Digite a quantidade para ser cadastrado" defaultValue="1"
-            onChange={(event) => changeForm(event.target)}
-          />
-        </div>
-
         <div className="container-product-form mt-1">
           <div className="one-form-input">
             <label htmlFor="custo">Custo do Produto (R$)</label>
-            <input className="input-default" type="number" id="custo" placeholder="Digite o preço de custo do produto" 
+            <input pattern={"^d+(.|,)d{2}$"} className="input-default" type="number" id="custo" placeholder="Digite o preço de custo do produto" 
               onChange={(event) => changeForm(event.target)}
             />
           </div>
@@ -126,6 +111,7 @@ export default function Client() {
             <label htmlFor="revenda">Preço de Revenda (R$)</label>
             <input className="input-default" type="number" id="revenda" placeholder="Digite o preço de revenda do produto"
               onChange={(event) => changeForm(event.target)}
+              pattern={"^d+(.|,)d{2}$"}
             />
           </div>
         </div>

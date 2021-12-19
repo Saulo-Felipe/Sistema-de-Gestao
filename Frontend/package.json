@@ -13,6 +13,7 @@
     "react-router-dom": "^6.1.1",
     "react-scripts": "4.0.3",
     "react-select": "^5.2.1",
+    "uuidv4": "^6.2.12",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

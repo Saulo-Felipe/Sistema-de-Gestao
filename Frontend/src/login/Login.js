@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './login.css'
 
@@ -28,6 +28,20 @@ export default function Login() {
     }
   }
 
+  useEffect(() => {
+    var isFocus = false
+    document.querySelector("#password").addEventListener("focus", () => {
+      isFocus = true
+    })
+    document.querySelector("#password").addEventListener("blur", () => {
+      isFocus = false
+    })
+    document.addEventListener("keydown", (event) => {
+      if (isFocus && event.key == "Enter") 
+        enter()
+    })
+  }, [])
+  
 
   return (
     <div id="login">
