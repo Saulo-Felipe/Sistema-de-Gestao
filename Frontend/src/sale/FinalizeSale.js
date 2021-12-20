@@ -11,7 +11,7 @@ export default function FinalizeSale(props) {
   useEffect(() => {
     console.log("Valores recebidos: ", props)
 
-    setTotalPrice(props.totalPrice)
+    setTotalPrice(props.totalPrice - props.discount)
 
     document.querySelector("#pay-value").addEventListener("blur", (element) => {
       var elementValue = element.target.value
@@ -46,8 +46,13 @@ export default function FinalizeSale(props) {
     }
   }
 
-  function finaleSale () {
-
+  async function finaleSale () {
+    console.log(props)
+    var { data } = await api.post("/create-sale", {
+      allPurchases: props.allPurchases,
+      totalPrice: props.totalPrice,
+      pedingValue: pedingValue,
+    })
   }
 
 
@@ -57,11 +62,14 @@ export default function FinalizeSale(props) {
         <div className="small-title text-center">Finalizar Compra</div>
 
         <div className="mt-5">
-          <div className="finale-sale-total">Valor Total: <strong> R$ {totalPrice}</strong></div>
+          <div className="finale-sale-total-mini"><strong>Valor Total:</strong> R${props.totalPrice}</div>
+          <div className="finale-sale-total-mini"><strong>Desconto:</strong> - R${props.discount}</div>
+          <div className="finale-sale-total">Valor Final:&emsp;R${totalPrice}</div>
 
-          <label htmlFor="pay-value">Valor Pago (R$)</label>
-          <br />
-          <input id="pay-value" type="number" defaultValue={props.totalPrice} onChange={(element) => handlePayValueChange(element.target)} min="0" placeholder="Valor recebido"/>
+          <hr className="mt-2 mb-2" />
+
+          <label className="label-default" htmlFor="pay-value">Valor Pago (R$)</label>
+          <input className="input-default" id="pay-value" type="number" defaultValue={totalPrice} onChange={(element) => handlePayValueChange(element.target)} min="0" placeholder="Valor recebido"/>
         </div>
         
         <div className="finalize-informations">
@@ -71,10 +79,7 @@ export default function FinalizeSale(props) {
         </div>
 
 
-        <button onClick = { () => finaleSale()}
-        className="finalize-btn"> Finalizar venda
-        
-        </button>
+        <button onClick = {() => finaleSale()} className="finalize-btn"> Finalizar venda</button>
       </div>
 
     </div>

@@ -1,0 +1,15 @@
+.no-match-404 {
+  color: #bd1f00;
+  font-size: 12rem;
+  text-align: center;
+  margin-bottom: 0;
+}
+.no-match-title {
+  text-align: center;
+  font-size: 2rem;
+}
+.no-match-subtitle {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 100px;
+}

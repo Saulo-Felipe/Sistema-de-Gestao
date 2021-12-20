@@ -13,12 +13,14 @@
   margin-top: 20px;
   margin-right: 20px;
 }
+hr {
+  border-color: #8080803d;
+}
 
 .grid-container {
   width: 75vw;
   margin: auto;
   padding: 50px;
-  margin-top: 3%;
   border-radius: 10px;
 }
 .sale-title {
@@ -38,7 +40,7 @@
   width: 50%;
   border-radius: 10px;
   margin-top: 20px;
-  margin-right: 20px;
+  margin-right: 0;
 }
 
 .input-container {
@@ -186,6 +188,10 @@
 }
 .subtotal-small {
   font-size: 1.5rem;
+  margin-right: 0;
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Finale sale */
@@ -194,12 +200,19 @@
 .finalize-container-sale {
   width: 75%;
   margin: auto;
-  margin-top: 120px;
+  margin-top: 80px;
   padding: 40px;
 }
 .finale-sale-total {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
+  background: #3b3b87;
+  color: white;
+  padding: 10px;
+  width: max-content;
+}
+
+.finale-sale-total-mini {
+  margin-bottom: 10px;
 }
 
 #pay-value {
@@ -208,9 +221,7 @@
   font-size: 1.2rem;
   margin-top: 5px;
 }
-.finalize-container-sale label {
-  font-size: 1.4rem;
-}
+
 .finalize-btn {
   margin-top: 20px;
   padding: 10px;
@@ -219,6 +230,10 @@
   color: white;
   font-size: 1rem;
   border: none;
+  cursor: pointer;
+}
+.finalize-btn:hover {
+  opacity: 0.9;
 }
 .finalize-informations {
   height: 70px;

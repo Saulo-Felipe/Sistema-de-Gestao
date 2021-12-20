@@ -27,6 +27,15 @@
 .one-form-input > label {
   font-weight: 600;
 }
+.text-start {
+  text-align: start;
+}
+
+.label-default {
+  font-weight: 600;
+  font-size: 1rem;
+  display: block;
+}
 
 .input-default {
   padding: 7px;

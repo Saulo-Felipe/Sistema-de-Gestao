@@ -13,9 +13,9 @@ export default function Login() {
     if (inputValue != "123") {
       alert("Senha incorreta!")
     } else {
+      localStorage.setItem("login_token", "123")
       navigate("/dashboard")
     }
-
   }
 
   function showPassword() {
@@ -29,6 +29,9 @@ export default function Login() {
   }
 
   useEffect(() => {
+    if (localStorage.getItem("login_token"))
+      localStorage.removeItem("login_token")
+
     var isFocus = false
     document.querySelector("#password").addEventListener("focus", () => {
       isFocus = true

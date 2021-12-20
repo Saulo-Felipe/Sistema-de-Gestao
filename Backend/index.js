@@ -53,6 +53,11 @@ app.post("/create-product", async (request, response) => {
         ${formState.revenda}
       )
     `)
+
+    await sequelize.query(`
+      INSERT INTO estoque (id_produto, qtd_disponivel) VALUES 
+      ((SELECT MAX(id) FROM produto), 0)
+    `)
     
     return response.json({ status: true })
   }
@@ -60,13 +65,11 @@ app.post("/create-product", async (request, response) => {
     console.log("Error: ", error)
     return response.json({ status: false })
   }
-
 })
 
 app.post("/get-clients", async(request, response) => {
 
   try {
-
     var [result] = await sequelize.query(`
       SELECT id, nome FROM cliente
     `)
@@ -82,9 +85,14 @@ app.post("/get-clients", async(request, response) => {
 app.post("/get-products", async(request, response) => {
   
   try {
-
     var [result] = await sequelize.query(`
-      SELECT id, nome, revenda FROM produto
+      SELECT produto.id, produto.nome, produto.revenda, estoque.qtd_disponivel FROM produto
+      inner join estoque on produto.id = estoque.id_produto
+      where estoque.id = (
+        SELECT id FROM estoque 
+        WHERE id_produto =  produto.id
+        ORDER BY id DESC LIMIT 1
+      )
     `)
 
     return response.json({ status: true, products: result })
@@ -98,13 +106,41 @@ app.post("/get-products", async(request, response) => {
 
 app.post("/create-sale", async(request, response) => {
   try {
-    const { sales } = request.body
-    var price = Number(toString(sales.price).replace(",", "."))
+    const { allPurchases, totalPrice, pedingValue} = request.body
+    var purchase = allPurchases[0]
 
     var [result] = await sequelize.query(`
-      INSERT INTO venda ( cliente_id, produto_id, quantidade, valor_unitario, valor_total, tipo_da_venda ) 
-      VALUES (${sales.client_id}, ${sales.product_id}, ${Number(sales.amount)}, ${price}, ${price*Number(price.amount)},  'pendente')
+      INSERT INTO vendas (id_cliente, valor_total, valor_pendente) VALUES
+      (${purchase.client_id}, ${totalPrice}, ${pedingValue}) 
     `)
+     
+    for (var c = 0; c < allPurchases.length; c++) {
+      var uniquePurchase = allPurchases[c]
+      await sequelize.query(`
+        INSERT INTO itens (id_venda, id_produto, quantidade, valor_total, valor_unitario) VALUES
+        (
+          (SELECT id FROM vendas ORDER BY id DESC LIMIT 1), 
+          ${uniquePurchase.product_id}, 
+          ${uniquePurchase.amount}, 
+          ${Number(uniquePurchase.price) * Number(uniquePurchase.amount)},
+          ${Number(uniquePurchase.price)}
+        )
+      `)
+      
+      var [quant] = await sequelize.query(`
+        SELECT id, qtd_disponivel FROM estoque 
+        WHERE id_produto =  ${uniquePurchase.product_id}
+        ORDER BY id DESC LIMIT 1
+      `)
+
+      await sequelize.query(`
+          INSERT INTO estoque (id_produto, qtd_disponivel) 
+          VALUES (
+            ${uniquePurchase.product_id}, 
+            ${Number(quant[0].qtd_disponivel) - Number(uniquePurchase.amount)}
+          )
+      `)
+    }
 
     return response.json({ status: true, products: result })
 
@@ -118,7 +154,7 @@ app.post("/create-sale", async(request, response) => {
 app.post("/stock", async(request, response) => {
 
   try {
-    const { type, id, action, newValue } = request.body
+    const { type, id, newValue } = request.body
 
     if (type === "GET") {
       var [result] = await sequelize.query(`
@@ -133,9 +169,6 @@ app.post("/stock", async(request, response) => {
         VALUES (${id}, ${Number(newValue)}) 
       `)
     }
-
-    console.log("Result: ", result)
-
     return response.json({ status: true, valueOfProduct: result })
   }
   catch(error) {

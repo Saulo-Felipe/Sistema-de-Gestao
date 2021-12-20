@@ -19,7 +19,7 @@ export default function Dashboard() {
             </div>
           
             <div className="dashboard-card-center">
-              <Link to="/client" className="no-haref-decoration href-dashboard-card">
+              <Link to="/cliente" className="no-haref-decoration href-dashboard-card">
                 <div className="card-dashboard">Cliente <i class="fas fa-users"></i></div>
               </Link>    
             </div>

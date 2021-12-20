@@ -27,6 +27,7 @@ export default function Stock() {
       var item = data.products[i]
       fakeProducts.push({ value: item.id, label: item.nome })
     }
+
     setProducts(fakeProducts)
   }
 
@@ -57,7 +58,6 @@ export default function Stock() {
       var { data } = await api.post("/stock", {
         type: "CREATE", 
         id: selectValue.value, 
-        action: typeChange ? "ADD" : "REMOVE",
         newValue: typeChange 
         ? Number(productAmount) + Number(newValue) 
         : Number(productAmount) - Number(newValue)

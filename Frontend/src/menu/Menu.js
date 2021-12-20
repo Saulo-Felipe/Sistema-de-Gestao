@@ -39,10 +39,36 @@ export default function Menu () {
             </Link>
           </div>
 
-          <div className="option-menu"><i class="fas fa-tachometer-alt"></i> Dashboard</div>
-          <div className="option-menu">Option1</div>
-          <div className="option-menu">Option1</div>
-          <div className="option-menu">Option1</div>
+          <Link className="no-href-decoration" to="/dashboard">
+            <div className="option-menu"><i class="fas fa-tachometer-alt"></i> Dashboard</div>
+          </Link>
+
+          <Link className="no-href-decoration" to="/venda">
+            <div className="option-menu"><i class="fas fa-hand-holding-usd"></i> Vendas</div>
+          </Link>
+
+          <Link className="no-href-decoration" to="/cliente">
+            <div className="option-menu"><i class="fas fa-users"></i> Cliente</div>
+          </Link>
+
+          <Link className="no-href-decoration" to="/produto">
+            <div className="option-menu"><i class="fas fa-store"></i> Produto</div>
+          </Link>
+
+          <Link className="no-href-decoration" to="/contas">
+            <div className="option-menu"><i class="fas fa-minus-circle"></i> Contas</div>
+          </Link>
+
+          <Link className="no-href-decoration" to="/estoque">
+            <div className="option-menu"><i class="fas fa-boxes"></i> Estoque</div>
+          </Link>
+
+          <Link className="no-href-decoration" to="/login">
+            <div className="option-menu"><i class="fas fa-sign-out-alt"></i> Sair</div>
+          </Link>
+          
+
+
         </div>
       </div>
 
