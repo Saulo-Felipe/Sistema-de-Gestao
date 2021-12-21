@@ -234,8 +234,7 @@ export default function Sale() {
                     min="1" 
                     id="amount" 
                     defaultValue="1" 
-                    onChange={(element) => {
-                      setOneCard({...oneCard, amount: element.target.value}); 
+                    onChange={(element) => { 
                       maxValueOfInput(element.target) 
                     }}
                     disabled 
