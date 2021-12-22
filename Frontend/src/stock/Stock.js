@@ -89,6 +89,7 @@ export default function Stock() {
       setTypeChange(false)
     } 
 
+    document.querySelector("#stock-amount").value = 0
     document.querySelector("#stock-amount").select()
   }
 
@@ -100,7 +101,12 @@ export default function Stock() {
         element.value = Number(newValue)
         value = newValue
       }
-    } 
+    }
+    for (var i = 0; i < value.length; i++) {
+      var p = value[i]
+      if (p != "1" && p != "2" && p != "3" && p != "4" && p != "5" && p != "6" && p != "7" && p != "8" && p != "9" && p != "0")
+        element.value = value.slice(0, value.length-1)
+    }
 
     setNewValue(value)
   }
@@ -135,14 +141,14 @@ export default function Stock() {
               Quantidade disponível: <strong>{productAmount}</strong>
             </div>
 
-            <input type="checkbox" defaultChecked className="mt-3" id="add-stock" onChange={(element) => checkboxChange(element.target)} />
+            <input type="radio" defaultChecked className="mt-3" id="add-stock" onChange={(element) => checkboxChange(element.target)} />
             <label htmlFor="add-stock">Adicionar</label>
 
             <br />
             {
               productAmount > 0 
               ? <>
-                  <input type="checkbox" id="remove-stock" onChange={(element) => checkboxChange(element.target)}/>
+                  <input type="radio" id="remove-stock" onChange={(element) => checkboxChange(element.target)}/>
                   <label htmlFor="remove-stock">Remover</label>
                 </>
               : ""
@@ -155,20 +161,24 @@ export default function Stock() {
               </strong>
               <br />
               <input 
-                type="number" 
-                className="input-default" id="stock-amount" 
+                type="string" 
+                className="input-default" 
+                id="stock-amount" 
                 placeholder={`Valor para ser ${typeChange ? "Adicionado" : "Removido"}`}
                 onChange={ (element) => changedNewValue(element.target) }
+                onFocus={(element) => element.target.select()}
+                onBlur={(element) => element.target.value.length <= 0 ? element.target.value = 1 : ""}
+                defaultValue={"0"}
               />
             </div>
 
             <div className="stock-container-btn text-end">
-                <button className="btn-red">
+                <button className="btn-red" disabled={loading ? true : false}>
                   <Link to="/dashboard" className="no-href-decoration">
                     Cancelar
                   </Link>
                 </button>
-              <button className="btn-blue" onClick={() => updateStock()}>Alterar</button>
+              <button className="btn-blue" disabled={loading ? true : false} onClick={() => updateStock()}>Alterar</button>
             </div>
           </>
           : ""

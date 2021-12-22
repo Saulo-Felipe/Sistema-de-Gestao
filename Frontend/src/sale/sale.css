@@ -17,8 +17,23 @@ hr {
   border-color: #8080803d;
 }
 
+.select-amount-option {
+  border-radius: 50%;
+  background-color: rgba(128, 128, 128, 0.1);
+  width: 21px;
+  height: 21px;
+  text-align: center;
+  line-height: 21px;
+  font-size: 0.8rem;
+}
+.select-option-amount {
+  text-align: center;
+  display: flex; 
+  justify-content: space-between;
+}
+
 .grid-container {
-  width: 75vw;
+  width: 85%;
   margin: auto;
   padding: 50px;
   border-radius: 10px;
@@ -222,18 +237,30 @@ hr {
   margin-top: 5px;
 }
 
-.finalize-btn {
+.finalize-btn-success {
   margin-top: 20px;
   padding: 10px;
-  width: 100%;
   background-color: green;
   color: white;
   font-size: 1rem;
   border: none;
   cursor: pointer;
 }
-.finalize-btn:hover {
-  opacity: 0.9;
+.finalize-btn-cancel {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: red;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.finalize-btn-cancel:hover {
+  opacity: 0.8;
+}
+.finalize-btn-success:hover {
+  opacity: 0.8;
 }
 .finalize-informations {
   height: 70px;
@@ -253,4 +280,46 @@ hr {
 }
 .text-green {
   color: green;
+}
+
+/* ---------- Finish Notify -------------- */
+
+
+.success-icon {
+  background-color: green;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 4rem;
+  color: white;
+  line-height: 120px;
+  transition: 0.5s;
+
+  animation-name: sizeIcon;
+  animation-duration: 0.5s;
+}
+.finish-sale-last {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+.finalize-btn-blue {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: rgb(24, 24, 114);
+  color: white;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
+}
+@keyframes sizeIcon {
+  0% { transform: scale(0.1); }
+  100% { transform: scale(1); }
+}
+
+.finish-sale-title {
+  margin-left: 30px;
 }

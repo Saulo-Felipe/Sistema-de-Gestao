@@ -1,206 +1,228 @@
-import React, { useEffect, useState } from 'react'
-import api from '../services/api'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
-import './sale.css'
-import { v4 as uuid } from "uuid";
+import api from '../services/api'
 import FinalizeSale from './FinalizeSale'
+import './sale.css'
+
+
 
 export default function Sale() {
-  const [clients, setClients] = useState([])
-  const [products, setProducts] = useState([])
-  const [allCards, setAllCards] = useState([])
-  const [oneCard, setOneCard] = useState({
-    id: "",
-    client: "",
-    client_id: "",
-    product: "",
-    product_id: "",
-    amount: "1",
-    price: "0"
-  })
-  const [valueOfclient, setValueOfclient] = useState(null)
-  const [valueOfProduct, setValueOfProduct] = useState(null)
-  const [msg, setMsg] = useState([false, ""])
-  const [subtotal, setSubtotal] = useState(0)
-  const [finalizeSale, setFinalizeSale] = useState(false)
-  const [isDisabledQtd, setIsDisabledQtd] = useState(true)
-  const [disabledCliente, setDisabledClient] = useState(false)
+
+  const [clientOptions, setClientOptions] = useState([])
+  const [productOptions, setProductOptions] = useState([])
+  const [currentProduct, setCurrentProduct] = useState(null)
+  const [currentClient, setCurrentClient] = useState(null)
+
+  const [msg, setMsg] = useState([false, ""]) 
+  const [disabledClient, setDisabledClient] = useState(false)
+
+  const [selectedProducts, setSelectedProducts] = useState([])
+  const [nextScreen, setNextScreen] = useState(false)
+
+  const [subTotal, setSubTotal] = useState(0)
   const [discount, setDiscount] = useState(0)
-  
-  function updateState(beforeArray, stateArray) {
-    var fakeOptions = []
-    var noStock = {
+
+
+  useEffect(() => {
+    getClients()
+    getProducts()
+  }, [])
+
+  useEffect(() => {
+    updateSubTotal()
+
+  }, [selectedProducts])
+
+  useEffect(() => {
+    if (msg[1].length != 0) {
+      setTimeout(() => {
+        setMsg([false, ""])
+      }, 4000);
+    }
+  }, [msg])
+
+  async function getClients() {
+    var { data } = await api.post('/get-clients')
+    if (!data.status) return alert("Erro interno grave, entre em contato com o administrador do site.")
+      
+    console.log("[backend] Clientes recebidos: ", data.clients)
+
+    var clientsINFO = []
+    for (var i = 0; i < data.clients.length; i++)
+      clientsINFO.push({ clientID: data.clients[i].id, label: data.clients[i].nome, value: data.clients[i].id })
+
+    setClientOptions([...clientsINFO])
+  }
+  async function getProducts() {
+    var { data } = await api.post("/get-products")
+    if (!data.status) return alert("Erro interno grave, entre em contato com o administrador do site.")
+
+    console.log("[backend] Produtos recebidos: ", data.products)
+    
+    var productsINFO = []
+    var outOfStock = {
       label: "Produtos sem estoque",
       options: []
     }
-    beforeArray.forEach((item) => {
-      if (item.qtd_disponivel >= 0) {
-        if (item.qtd_disponivel == 0)
-          noStock.options.push({ value: item.id, label: item.nome, price: item.revenda, qtd_disponivel: item.qtd_disponivel, disabled: true})
-        else 
-          fakeOptions.push({ value: item.id, label: item.nome, price: item.revenda, qtd_disponivel: item.qtd_disponivel })
 
-      }else
-        fakeOptions.push({ value: item.id, label: item.nome, price: item.revenda})
-    })
-    fakeOptions.push({ ...noStock })
+    for (var i = 0; i < data.products.length; i++) {
+      var product = data.products[i]
 
-    stateArray(fakeOptions)
-  }
-  
-  async function refreshState() {
-    var response = await api.post("/get-clients")
-    var { data } = await api.post("/get-products")
-
-    if (!response.data.status || !data.status) return alert("Erro ao cadastrar cliente.")
-
-    updateState(response.data.clients, setClients)
-    updateState(data.products, setProducts)
-
-    const id = uuid()
-    setOneCard({...oneCard, amount: "1", id: id})
-  }
-
-  useEffect(() => {
-    refreshState()
-  }, [])
-
-  function addCard() {
-    if (valueOfProduct === null)
-      setMsg([false, "Selecione um produto para poder vendê-lo."])
-    else if (valueOfclient === null)
-      setMsg([false, "Selecione o cliente comprador."])
-    else if (document.querySelector("#amount").value < "1")
-      setMsg([false, "Digite uma quantidade maior que 0."])
-    else {
-      if (!disabledCliente) 
-        setDisabledClient(true)
-      updateSubtotal("sale", oneCard.price, oneCard.amount)
-      setAllCards([...allCards, oneCard])
-
-      refreshState()
-      clearPage()
-      setMsg([true, "Venda adicionada com sucesso!"])
+      if (product.qtd_disponivel === 0)
+        outOfStock.options.push({ value: product.id, label: product.nome, productID: product.id, available: product.qtd_disponivel, disabled: true })
+      else
+      productsINFO.push({ 
+        productID: product.id,
+        label: product.nome, 
+        available: product.qtd_disponivel, 
+        value: product.id,
+        price: product.revenda 
+      })
     }
-    
-    setTimeout(() => {
-      setMsg([false, ""])
-    }, 4000);
-  }
-  
-  function clientSelectChange(element) {
-    if (element) {
-      setValueOfclient(element)
-      var fakeCard = oneCard
 
-      fakeCard['client'] = element.label
-      fakeCard['client_id'] = element.value
-  
-      setOneCard(fakeCard)
-    } 
+
+
+    setProductOptions([...productsINFO, { ...outOfStock }])
   }
 
-  function productSelectChange(element) {
-    console.log("MUDOU")
-    if (element) {
-      setValueOfProduct(element)
-      var fakeCard = oneCard
+  function updateSubTotal() {
+    var subtotal = 0
+    for (var i = 0; i < selectedProducts.length; i++) {
+      subtotal += Number(selectedProducts[i].price)*Number(selectedProducts[i].amount)
+    }
+    setSubTotal(subtotal)
+  }
+  function handleProductSelect(options) {
+    setCurrentProduct(options)
+    console.log("Produto atual: ", options)
+  }
+  function handleClientSelect(options) {
+    setCurrentClient(options)
 
-      fakeCard['product'] = element.label
-      fakeCard['product_id'] = element.value
-      fakeCard['price'] = element.price
+    console.log("Cliente atual: ", options)
+  }
+
+  function validateInput(element) {
+    if (currentProduct) {
+      const limiteValue = currentProduct.available
+      var value = String(element.value)
   
-      setOneCard(fakeCard)
+      if (value > limiteValue) {
+        element.value = value.slice(0, value.length-1)
+      } else {
+        for (var i = 0; i < value.length; i++) {
+          var p = value[i]
+          if (p != "1" && p != "2" && p != "3" && p != "4" && p != "5" && p != "6" && p != "7" && p != "8" && p != "9" && p != "0")
+            element.value = value.slice(0, value.length-1)
+        }
+      }
 
-      if (isDisabledQtd) {
-        setIsDisabledQtd(false)
-        document.querySelector("#amount").removeAttribute("disabled")
+    } else element.value = 1
+  }
+  function validateInputDiscount(element) {
+    const limiteValue = subTotal
+    var value = String(element.value)
+
+    if (Number(value) > limiteValue) {
+      value = value.slice(0, value.length-1)
+    } else {
+      for (var i = 0; i < value.length; i++) {
+        var p = value[i]
+        if (p != "1" && p != "2" && p != "3" && p != "4" && p != "5" && p != "6" && p != "7" && p != "8" && p != "9" && p != "0" && p != ".")
+          value = value.slice(0, value.length-1)
       }
     }
+    element.value = value
+    setDiscount(Number(value).toFixed(2))
   }
 
-  function clearPage() {
-    setOneCard({
-      client: "",
-      client_id: "",
-      product: "",
-      product_id: "",
-      amount: "1",
-      price: "0"
-    })
+  function addProduct() {
+    if (currentProduct) {
+      var amount = document.querySelector("#amount").value
 
-    setValueOfProduct(null)
-    var input = document.getElementById("amount")
+      if (!currentClient) {
+        setMsg([false, "Nenhum cliente selecionado"])
+      } else if (amount > currentProduct.available || amount <= 0) {
+        setMsg([false, "Quantidade de produtos inválido"])
+      } else {
+        console.log("Atual: ", currentProduct, currentClient)
+        setSelectedProducts([...selectedProducts, { 
+          product: currentProduct.label,
+          amount: amount,
+          price: currentProduct.price,
+          id: currentProduct.productID,
+          clientID: currentClient.clientID,
+        }])
 
-    input.value = "1"
-    input.setAttribute("disabled", true)
-    setIsDisabledQtd(true)
+        var newAvailableAmount = []
+
+        for (var i = 0; i < productOptions.length; i++) {
+          var loopPos = {...productOptions[i]}
+
+          if (loopPos.productID === currentProduct.productID)
+            loopPos.available = Number(currentProduct.available) - Number(amount)
+          
+          newAvailableAmount.push({ ...loopPos })
+        }
+
+        setProductOptions([ ...newAvailableAmount ])   
+        
+        // Clear options selected
+        if (!disabledClient) setDisabledClient(true)
+
+        document.querySelector("#amount").value = "1"
+        setCurrentProduct(null)
+
+        setMsg([1, "Produto selecionado com sucesso"])
+
+      }
+    } else {
+      setMsg([false, "Nenhum produto selecionado"])
+    }
+  }
+
+  function finishSale() {
+    if (selectedProducts.length > 0) {
+      setNextScreen(true)
+    } else 
+      setMsg([false, "Selecione algum produto para poder finalizar a venda."])
   }
 
   function deleteCard(element) {
-
     if (element) {
       var id = element.value
 
-      var fakeCards = allCards
+      var newSelectedValues = selectedProducts
 
-      for (var i = 0; i < fakeCards.length; i++)
-        if (id == allCards[i].id) {  
-          updateSubtotal("delete", fakeCards[i].price, fakeCards[i].amount)
-          fakeCards.splice(i, 1)
-          setAllCards([...fakeCards])
+      for (var i = 0; i < newSelectedValues.length; i++)
+        if (id == selectedProducts[i].id) {
+          var updateAvailableProducts = []
+          for (var a = 0; a < productOptions.length; a++) {
+            var product = productOptions[a]
+            if (product.productID == Number(id)) {
+              product.available += Number(selectedProducts[i].amount)
+            }
+            updateAvailableProducts.push(product)
+          }
+
+          newSelectedValues.splice(i, 1)
+          setSelectedProducts([...newSelectedValues])
           break
         }
     }  
-    console.log("Delete: ", element)
   }
 
-  function updateSubtotal(type, value, amount) {
-    var oldSubtotal = subtotal
-    var num = 0
-    if (type == "sale") {
-      num = Number(oldSubtotal) + (Number(value) * Number(amount))
-    } else {
-      num = Number(oldSubtotal) - (Number(value) * Number(amount))      
-    }
-    
-    setSubtotal(isFloat(num) ? num.toFixed(2) : num)
-  }
-
-  function isFloat(n){
-    return Number(n) === n && n % 1 !== 0;
-  }
-
-  function maxValueOfInput(element) {
-    if (!isDisabledQtd) {
-      var value = element.value
-      var maxValue = valueOfProduct.qtd_disponivel
+  // Estrutura para as opções do select
+  const format = (product) =>
+    <div className="select-option-amount">
+      <div>{product.label}</div>
+      <div className="select-amount-option">{product.available}</div>
+    </div>
   
-      if (value > maxValue) {
-        var newValue = String(value).slice(0, value.length-1)      
-        element.value = newValue
-      }  
-    } else
-      element.value = 1
-  }
 
-  function discountChange(element) {
-    var value = String(element.value)
-
-    if (Number(value) > Number(subtotal)) {
-      value = value.slice(0, value.length-1)
-      
-      element.value = value
-    }
-
-    value = value.indexOf(".") === value.length-1 ? value.slice(0, value.length-1) : value
-
-    setDiscount(value)
-  }
-   
   return (
-    finalizeSale 
-    ? <FinalizeSale allPurchases={allCards} totalPrice={subtotal} discount={discount} />
+    nextScreen 
+    ? <FinalizeSale allPurchases={selectedProducts} totalPrice={subTotal} discount={discount} state={setNextScreen} />
     :
     <div className="w-100">
       <div className="grid-container">
@@ -208,14 +230,18 @@ export default function Sale() {
 
         <div className="content-sale">
           <div className="container-01">
-
             <div>
               <div className="container-sale">
                 <div className="small-title text-center sale-title">Lançamento de Vendas</div>
-
                 <div className="one-form-input m-0">
                   <label>Selecione um Cliente</label>
-                  <Select isDisabled={disabledCliente} value={valueOfclient} options={clients} onChange={(element) => clientSelectChange(element)} />
+                  <Select 
+                    placeholder="Selecione um cliente"
+                    options={clientOptions} 
+                    onChange={(element) => handleClientSelect(element)} 
+                    value={currentClient}
+                    isDisabled={disabledClient}
+                  />
                 </div>
               </div>
 
@@ -223,27 +249,31 @@ export default function Sale() {
                 <div className="container-sale product-select">
                   <div className="one-form-input m-0">
                     <label>Selecione um Produto</label>
-                    <Select value={valueOfProduct} options={products} onChange={(element) => productSelectChange(element)} isOptionDisabled={(option) => option.disabled} />
+                    <Select 
+                      placeholder="Selecione um produto"
+                      options={productOptions} 
+                      onChange={(element) => handleProductSelect(element)}
+                      value={currentProduct}
+                      isOptionDisabled={(option) => option.disabled}
+                      formatOptionLabel={format}
+
+                    />
                   </div>
                 </div>
 
                 <div className="container-sale quant-input">
                   <label>Qtd.</label>
                   <input 
-                    type="number" 
-                    min="1" 
-                    id="amount" 
-                    defaultValue="1" 
-                    onChange={(element) => { 
-                      maxValueOfInput(element.target) 
-                    }}
-                    disabled 
+                    type="number"
+                    min="1"
+                    id="amount"
+                    defaultValue="1"
+                    disabled = {currentProduct != null ? false : true}
+                    onChange={(element) => validateInput(element.target)}
+                    onFocus={(element) => element.target.select()}
+                    onBlur={(element) => element.target.value.length <= 0 ? element.target.value = 1 : ""}
                   />
-                  {
-                    valueOfProduct
-                    ? <small><strong>MAX: {valueOfProduct.qtd_disponivel}</strong></small>
-                    : <></>
-                  }
+                  <small><strong>MAX: { currentProduct ? currentProduct.available : 0 }</strong></small>
                 </div>  
               </div>
             </div>
@@ -251,14 +281,16 @@ export default function Sale() {
             <div className="input-container">
 
               <div className="text-end">
-                <button className="btn-blue" id="send-sell" onClick={() => {addCard()}}>Adicionar</button>
+                <button className="btn-blue" id="send-sell" onClick={() => addProduct()}>Adicionar</button>
               </div>
 
-              {
-                msg[1].length > 0
-                ? msg[0] ? <div className="success-msg msg-alerts">{msg[1]}</div> : <div className="error-msg msg-alerts">{msg[1]}</div>
-                : ""
-              }
+                {
+                  msg[1] 
+                  ? msg[0] 
+                    ? <div className="success-msg msg-alerts text-center">{msg[1]}</div>
+                    : <div className="error-msg msg-alerts">{msg[1]}</div>
+                  : <></>
+                }
 
             </div>
           </div>
@@ -276,12 +308,12 @@ export default function Sale() {
               <div className="sell-container-products">
 
                 {
-                  allCards.map(item =>
+                  selectedProducts.map(item =>
                     <div className="product-sell">
                       <div className="card-sale-produto">{item.product}</div>
                       <div className="card-sale-qtd">x{item.amount}</div>
                       <div className="card-sale-valor">R${item.price}</div>
-                      <div className="card-sale-valor-final">R${item.price*item.amount}</div>
+                      <div className="card-sale-valor-final">R${(item.price*item.amount).toFixed(2)}</div>
 
                       <div className="delete-card" onClick={(element) => deleteCard(element.target.children[1])}>
                         <i class="fas fa-trash-alt"></i>
@@ -297,40 +329,30 @@ export default function Sale() {
             </div>
             <div className="text-end subtotal-small container-sale">
               <div className="text-start">
-                <label htmlFor="discount" className="label-default" >Desconto</label>
+                <label htmlFor="discount" className="label-default" >Desconto (R$)</label>
                 <input 
-                  onChange={(element) => discountChange(element.target)} 
-                  type="number" 
+                  type="string" 
                   className="input-default" 
                   id="discount" 
                   defaultValue="0"
                   placeholder={"Digite um desconto (R$)"}
                   onFocus={(element) => element.target.select()}
                   onBlur={(element) => element.target.value.length <= 0 ? element.target.value = 0 : ""}
+                  onChange={(element) => validateInputDiscount(element.target)}
                 />
               </div>
-              <div style={{alignSelf: "center"}}>
+              <div>
                 <strong>Subtotal: </strong>
-                R$ {(subtotal - discount).toFixed(2)}
+                R$ { (subTotal - discount).toFixed(2) }
               </div>
             </div>
             <div className="text-end">
-              <button className="btn-green" id="finally-add" onClick={() => {
-                if (allCards.length === 0) {
-                  setMsg([false, "Adicione algum produto para poder finalizar a venda."])
-
-                  setTimeout(() => setMsg([false, ""]), 4000)
-                }
-                else 
-                  setFinalizeSale(true)
-              }
-              }>Finalizar Venda</button>
+              <button className="btn-green" id="finally-add" onClick={() => finishSale()}>Finalizar Venda</button>
             </div>          
           </div>
-
         </div>
-
       </div>
     </div>
+
   )
 }

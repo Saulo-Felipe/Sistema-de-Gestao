@@ -111,16 +111,17 @@ app.post("/create-sale", async(request, response) => {
 
     var [result] = await sequelize.query(`
       INSERT INTO vendas (id_cliente, valor_total, valor_pendente) VALUES
-      (${purchase.client_id}, ${totalPrice}, ${pedingValue}) 
+      (${purchase.clientID}, ${totalPrice}, ${pedingValue}) 
     `)
      
     for (var c = 0; c < allPurchases.length; c++) {
       var uniquePurchase = allPurchases[c]
+      console.log("Inserindo: ", uniquePurchase)
       await sequelize.query(`
         INSERT INTO itens (id_venda, id_produto, quantidade, valor_total, valor_unitario) VALUES
         (
           (SELECT id FROM vendas ORDER BY id DESC LIMIT 1), 
-          ${uniquePurchase.product_id}, 
+          ${uniquePurchase.id}, 
           ${uniquePurchase.amount}, 
           ${Number(uniquePurchase.price) * Number(uniquePurchase.amount)},
           ${Number(uniquePurchase.price)}
@@ -129,14 +130,16 @@ app.post("/create-sale", async(request, response) => {
       
       var [quant] = await sequelize.query(`
         SELECT id, qtd_disponivel FROM estoque 
-        WHERE id_produto =  ${uniquePurchase.product_id}
+        WHERE id_produto =  ${uniquePurchase.id}
         ORDER BY id DESC LIMIT 1
       `)
+
+      console.log("Quanti: ", quant)
 
       await sequelize.query(`
           INSERT INTO estoque (id_produto, qtd_disponivel) 
           VALUES (
-            ${uniquePurchase.product_id}, 
+            ${uniquePurchase.id}, 
             ${Number(quant[0].qtd_disponivel) - Number(uniquePurchase.amount)}
           )
       `)
