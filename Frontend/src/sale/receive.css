@@ -1,0 +1,129 @@
+.card-select-action {
+  width: 250px;
+  height: 250px;
+  background-color: white;
+  border-radius: 10px;
+  font-size: 3rem;
+  text-align: center;
+  line-height: 250px;
+  padding: 10px;
+  transition: 0.4s;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.453);
+}
+.card-select-action:hover {
+  transform: scale(1.1);
+}
+.cards-select-action {
+  margin-top: 240px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.client-debt-select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.client-debt-value {
+  font-size: 0.8rem;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  
+}
+.circle-debt {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+.debt-red {
+  background-color: red;
+}
+.debt-green {
+    background-color: green;
+}
+.debt-yellow {
+  background-color: yellow;  
+}
+.receive-dinamic-client {
+  display: flex;
+  justify-content: space-between;
+
+}
+.receive-dinamic-client input {
+  width: -webkit-fill-available;
+}
+.handle-container-receive {
+  width: 58%;
+}
+.card-client-history-receive {
+  background-color: rgba(128, 128, 128, 0.2);
+  width: 40%;
+  border-radius: 10px;
+  max-height: 280px;
+}
+.title-action-receive {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: 10px;
+}
+.option-action-receive {
+  background-color: white;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+.receive-total-title {
+  font-size: 1.4rem;
+  background-color: rgba(128, 128, 128, 0.2);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+
+
+
+
+
+/* --------- All classes ---------- */
+label {
+  display: block;
+}
+.mr-1 {
+  margin-right: 1%;
+}
+.mr-2 {
+  margin-right: 2%;
+}
+.mr-3 {
+  margin-right: 3%;
+}
+.mr-4 {
+  margin-right: 4%;
+}
+.mr-5 {
+  margin-right: 5%;
+}
+
+.ml-1 {
+  margin-left: 1%;
+}
+.ml-2 {
+  margin-left: 2%;
+}
+.ml-3 {
+  margin-left: 3%;
+}
+.ml-4 {
+  margin-left: 4%;
+}
+.ml-5 {
+  margin-left: 5%;
+}

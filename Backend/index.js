@@ -106,12 +106,23 @@ app.post("/get-products", async(request, response) => {
 
 app.post("/create-sale", async(request, response) => {
   try {
-    const { allPurchases, totalPrice, pedingValue} = request.body
+    const { allPurchases, totalPrice, pedingValue, discount} = request.body
     var purchase = allPurchases[0]
 
-    var [result] = await sequelize.query(`
-      INSERT INTO vendas (id_cliente, valor_total, valor_pendente) VALUES
-      (${purchase.clientID}, ${totalPrice}, ${pedingValue}) 
+    console.log("Dados recebidos: ", pedingValue, totalPrice)
+
+    await sequelize.query(`
+      INSERT INTO vendas (id_cliente, valor_total, desconto) VALUES
+      (${purchase.clientID}, ${totalPrice}, ${discount}) 
+    `)
+
+    await sequelize.query(`
+      INSERT INTO contas_pendentes (id_venda, valor_pendente, valor_recebido) VALUES 
+      (
+        (SELECT id FROM vendas ORDER BY id DESC LIMIT 1),
+        ${pedingValue == 0 ? "NULL" : Number(pedingValue).toFixed(2)},
+        NULL
+      )
     `)
      
     for (var c = 0; c < allPurchases.length; c++) {
@@ -134,8 +145,6 @@ app.post("/create-sale", async(request, response) => {
         ORDER BY id DESC LIMIT 1
       `)
 
-      console.log("Quanti: ", quant)
-
       await sequelize.query(`
           INSERT INTO estoque (id_produto, qtd_disponivel) 
           VALUES (
@@ -145,7 +154,7 @@ app.post("/create-sale", async(request, response) => {
       `)
     }
 
-    return response.json({ status: true, products: result })
+    return response.json({ status: true })
 
   }
   catch(error) {
@@ -178,8 +187,64 @@ app.post("/stock", async(request, response) => {
     console.log("Error: ", error)
     return response.json({ status: false })
   }
-
 })
+
+app.post("/get-clients-debt", async(request, response) => {
+
+  try {
+    var [result] = await sequelize.query(`
+      SELECT vendas.id_cliente, (SELECT nome FROM cliente WHERE id = vendas.id_cliente), SUM(vendas.valor_pendente - vendas.valor_recebido) as pendencia_final FROM vendas
+      INNER JOIN cliente ON cliente.id = vendas.id_cliente
+      GROUP BY id_cliente
+      HAVING SUM(vendas.valor_pendente - vendas.valor_recebido) > 0
+    `)
+
+    return response.json({ status: true, clients: result })
+
+  }
+  catch(error) {
+    console.log("Error: ", error)
+    return response.json({ status: false })
+  }
+})
+
+app.post("/get-sale-history", async(request, response) => {
+  try {
+    
+    var { clientID } = request.body
+
+    var [result] = await sequelize.query(`
+      SELECT * FROM vendas 
+      WHERE id_cliente = ${ clientID }
+      AND (valor_pendente != 0 OR valor_recebido != 0) 
+      ORDER BY id DESC LIMIT 10
+    `)
+
+    return response.json({ status: true, history: result })
+  }
+  catch(error) {
+    console.log("Error: ", error)
+    return response.json({ status: false })
+  }
+})
+
+app.post("/create-receive", async(request, response) => {
+
+  try {
+  
+    await sequelize.query(`
+      INSERT INTO vendas (id_cliente, valor_total, valor_pendente) VALUES
+      (${purchase.clientID}, ${totalPrice}, ${pedingValue}) 
+    `)
+
+  }
+  catch(error) {
+    console.log("Error: ", error)
+    return response.json({ status: false })
+  }
+  
+})
+
 
 
 app.listen(8081, () => console.log("Server is running!"))

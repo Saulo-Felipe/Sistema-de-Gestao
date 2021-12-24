@@ -23,8 +23,13 @@ export default function Menu () {
       setAllowMenu(false)
     else
       setAllowMenu(true)
+    
+    selectMenuOption()
   }, [url])
 
+  function selectMenuOption() {
+
+  }
 
   return (
     allowMenu ?
@@ -40,27 +45,27 @@ export default function Menu () {
           </div>
 
           <Link className="no-href-decoration" to="/dashboard">
-            <div className="option-menu"><i class="fas fa-tachometer-alt"></i> Dashboard</div>
+            <div className="option-menu" id="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</div>
           </Link>
 
-          <Link className="no-href-decoration" to="/venda">
-            <div className="option-menu"><i class="fas fa-hand-holding-usd"></i> Vendas</div>
+          <Link className="no-href-decoration" to="/select-action">
+            <div className="option-menu" id="venda"><i class="fas fa-hand-holding-usd"></i> Receber / Vender</div>
           </Link>
 
           <Link className="no-href-decoration" to="/cliente">
-            <div className="option-menu"><i class="fas fa-users"></i> Cliente</div>
+            <div className="option-menu" id="cliente"><i class="fas fa-users"></i> Cliente</div>
           </Link>
 
           <Link className="no-href-decoration" to="/produto">
-            <div className="option-menu"><i class="fas fa-store"></i> Produto</div>
+            <div className="option-menu" id="produto"><i class="fas fa-store"></i> Produto</div>
           </Link>
 
           <Link className="no-href-decoration" to="/contas">
-            <div className="option-menu"><i class="fas fa-minus-circle"></i> Contas</div>
+            <div className="option-menu" id="contas"><i class="fas fa-minus-circle"></i> Contas</div>
           </Link>
 
           <Link className="no-href-decoration" to="/estoque">
-            <div className="option-menu"><i class="fas fa-boxes"></i> Estoque</div>
+            <div className="option-menu" id="estoque"><i class="fas fa-boxes"></i> Estoque</div>
           </Link>
 
           <Link className="no-href-decoration" to="/login">

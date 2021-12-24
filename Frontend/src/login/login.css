@@ -3,7 +3,7 @@ body {
   font-family: 'PT Sans', sans-serif;
 }
 
-#login {
+#login-container {
   width: 30vw;
   background-color: white;
   border-radius: 10px;
@@ -15,9 +15,7 @@ body {
   left: 50vw;
   transform: translate(-50%, -50%);
 }
-#login h1 {
 
-}
 
 .action {
   display: flex;

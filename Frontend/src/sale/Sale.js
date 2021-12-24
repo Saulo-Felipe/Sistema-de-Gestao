@@ -47,9 +47,12 @@ export default function Sale() {
       
     console.log("[backend] Clientes recebidos: ", data.clients)
 
+
     var clientsINFO = []
-    for (var i = 0; i < data.clients.length; i++)
+    for (var i = 0; i < data.clients.length; i++) {
       clientsINFO.push({ clientID: data.clients[i].id, label: data.clients[i].nome, value: data.clients[i].id })
+      
+    }
 
     setClientOptions([...clientsINFO])
   }
@@ -316,8 +319,8 @@ export default function Sale() {
                       <div className="card-sale-valor-final">R${(item.price*item.amount).toFixed(2)}</div>
 
                       <div className="delete-card" onClick={(element) => deleteCard(element.target.children[1])}>
-                        <i class="fas fa-trash-alt"></i>
-                        <input type="hidden" value={item.id} />
+                        <i class="fas fa-trash-alt" onClick={() => deleteCard(document.querySelector(`#S${item.id}`))}></i>
+                        <input type="hidden" id={`S${item.id}`} value={item.id} />
                       </div>
                     </div>
                   )

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import FinishNotify from './FinishNotify'
+import { Link } from 'react-router-dom'
 import api from "../services/api"
 
 
@@ -14,6 +14,7 @@ export default function FinalizeSale(props) {
   useEffect(() => {
     console.log("[Props]: ", props)
 
+    setPendingValue(props.totalPrice)
     setTotalPrice(props.totalPrice - props.discount)
   }, [])
 
@@ -44,6 +45,7 @@ export default function FinalizeSale(props) {
       allPurchases: props.allPurchases,
       totalPrice: props.totalPrice,
       pedingValue: pedingValue,
+      discount: props.discount,
     })
 
     setLoading(false)
@@ -91,7 +93,7 @@ export default function FinalizeSale(props) {
           loading
           ?
           <div className="text-center mt-2">
-            <img src={`${require("../images/loading.gif").default}`}/>
+            <img style={{position: "absolute"}} src={`${require("../images/loading.gif").default}`}/>
           </div>
           : <></>
 
@@ -115,6 +117,19 @@ export default function FinalizeSale(props) {
 
     </div>
 
-    : <FinishNotify />
+    : <div className="w-100">
+      <div className="container finish-sale-last">
+        <div className="success-icon"><i class="fas fa-check"></i></div>
+        <div className="small-title finish-sale-title">Venda efetuada com sucesso!</div>
+      </div>
+      <div className="container mt-2 text-center">
+
+        <button className="finalize-btn-success" onClick={() => window.location.reload()}>Realizar uma nova venda</button>
+
+        <Link to="/dashboard">
+          <button className="finalize-btn-blue">Página inicial <i class="fas fa-home"></i></button>
+        </Link>
+      </div>
+    </div>
   )
 }

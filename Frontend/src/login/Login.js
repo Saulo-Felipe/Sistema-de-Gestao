@@ -47,7 +47,7 @@ export default function Login() {
   
 
   return (
-    <div id="login">
+    <div id="login-container">
       <div className="action">
         <h1>Seja Bem vindo(a)!</h1>
         <input type="password" id="password" placeholder="Digite sua senha de acesso" />

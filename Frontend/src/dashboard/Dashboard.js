@@ -4,7 +4,7 @@ import './dashboard.css'
 
 export default function Dashboard() {
   return (
-    <div id="dashboard" className="w-100">
+    <div className="w-100">
       
       <div className="dashboard-content">
 
@@ -13,8 +13,8 @@ export default function Dashboard() {
           <div>
             
             <div className="dashboard-card-center">
-              <Link to="/venda" className="no-haref-decoration href-dashboard-card">
-                <div className="card-dashboard">Venda <i class="fas fa-hand-holding-usd"></i></div>
+              <Link to="/select-action" className="no-haref-decoration href-dashboard-card">
+                <div className="card-dashboard">Pagamento <i class="fas fa-hand-holding-usd"></i></div>
               </Link>
             </div>
           

@@ -32,7 +32,7 @@
   padding-left: 45px;
 }
 .option-menu:hover {
-  background-color: #00274b;
+  background-color: #00274b !important;
   cursor: pointer;
 }
 
