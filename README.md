@@ -1,4 +1,4 @@
-<a href="https://sistema-gestao-frontend.herokuapp.com/">
+<a href="https://sistema-gestao-frontend.herokuapp.com/login">
     <p align="center">
         <img src="logo.png" width=45%>
     </p>
@@ -14,7 +14,7 @@
 * [Tecnologias](#tecnologias)
 * [Autor](#autor)
 * [Licença](#licenca)
-* <a href="https://sistema-gestao-frontend.herokuapp.com/" target="_blank"> 🏪 Sistema de Gestão ---- Concluído ✅ ----</a>
+* <a href="https://sistema-gestao-frontend.herokuapp.com/login" target="_blank"> 🏪 Sistema de Gestão ---- Concluído ✅ ----</a>
 
 ------------------------------------
 
@@ -35,10 +35,10 @@ Sistema de gestão para monitar vendas e compras, gastos e ganhos de lojas/empre
 
 ## 🎨 Layout <a id="layout"></a>
 
-<a href="https://sistema-gestao-frontend.herokuapp.com/"><img src="https://img.shields.io/badge/Site-E--commerce-blue"/></a>
+<a href="https://sistema-gestao-frontend.herokuapp.com/login"><img src="https://img.shields.io/badge/Site-Sistema de Gestão-blue"/></a>
 <img src="https://img.shields.io/badge/Backend-NodeJs-green">
 <img src="https://img.shields.io/badge/Frontend-ReactJS-green">
-<p>*O Layout completo do site está disponível <a href="https://sistema-gestao-frontend.herokuapp.com/">aqui</a>.</p>
+<p>*O Layout completo do site está disponível (SENHA: 123)<a href="https://sistema-gestao-frontend.herokuapp.com/login">aqui</a>.</p>
 
 <img src="screen01.jpeg">
 <img src="screen02.jpeg">
@@ -65,7 +65,7 @@ $ cd Backend && yarn install && yarn start
 
 ## 🤖 Tecnologias <a id="tecnologias"></a>
 
-Neste e-commerce, foram utilizadas as seguintes tecnologias: 
+Neste sistema de gestão, foram utilizadas as seguintes tecnologias: 
 
 * Bootstrap <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" width="20px" />
 * HTML5 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original-wordmark.svg" width="20px"/> 
