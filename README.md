@@ -12,7 +12,7 @@
 * [Tecnologias](#tecnologias)
 * [Autor](#autor)
 * [Licença](#licenca)
-* <a href="https://e-commerce-frontend-saulo.herokuapp.com/" target="_blank"> 🏪 E-commerce com React e Nodejs ---- Concluído ✅ ----</a>
+* <a href="https://sistema-gestao-frontend.herokuapp.com/" target="_blank"> 🏪 Sistema de Gestão ---- Concluído ✅ ----</a>
 
 ------------------------------------
 
@@ -33,19 +33,16 @@ Sistema de gestão para monitar vendas e compras, gastos e ganhos de lojas/empre
 
 ## 🎨 Layout <a id="layout"></a>
 
-<a href="https://e-commerce-frontend-saulo.herokuapp.com/"><img src="https://img.shields.io/badge/Site-E--commerce-blue"/></a>
+<a href="https://sistema-gestao-frontend.herokuapp.com/"><img src="https://img.shields.io/badge/Site-E--commerce-blue"/></a>
 <img src="https://img.shields.io/badge/Backend-NodeJs-green">
 <img src="https://img.shields.io/badge/Frontend-ReactJS-green">
-<p>*O Layout completo do site está disponível <a href="https://e-commerce-frontend-saulo.herokuapp.com/">aqui</a>.</p>
+<p>*O Layout completo do site está disponível <a href="https://sistema-gestao-frontend.herokuapp.com/">aqui</a>.</p>
 
-<img src="github/layout_08.png">
-<img src="github/layout_07.png">
-<img src="github/layout_06.png">
-<img src="github/layout_05.png">
-<img src="github/layout_04.png">
-<img src="github/layout_03.png">
-<img src="github/layout_02.png">
-<img src="github/layout_01.png">
+<img src="screen01.jpeg">
+<img src="screen02.jpeg">
+<img src="screen03.jpeg">
+<img src="screen04.jpeg">
+
 
 ------------------------------------
 
@@ -54,15 +51,11 @@ Sistema de gestão para monitar vendas e compras, gastos e ganhos de lojas/empre
 Para executar o projeto na sua máquina, basta seguir a sequencia de passos:
 
 ```
-# Clone o repositório
-$ git clone https://github.com/Saulo-Felipe/eCommerce-ReactJS-NodeJS.git
+# Execute o servidor e o cliente
 
-# Inicie o servidor do Nodejs e React
+$ cd Frontend && yarn install && yarn start
 
-eCommerce-ReactJS-NodeJS/frontend $ yarn dev
-eCommerce-ReactJS-NodeJS/backend $ yarn dev
-
-* é necessario a configuração de um banco de dados para adição dos produtos
+$ cd Backend && yarn install && yarn start
 
 ```
 
