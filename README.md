@@ -1,7 +1,9 @@
-<p align="center">
-    <img src="logo.png" width=45%>
-</p>
-
+<a href="https://sistema-gestao-frontend.herokuapp.com/">
+    <p align="center">
+        <img src="logo.png" width=45%>
+    </p>
+</a>
+    
 ------------------------------------
 ## Índice
 
