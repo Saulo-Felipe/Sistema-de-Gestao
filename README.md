@@ -1,4 +1,4 @@
-<a href="https://sistema-gestao-frontend.herokuapp.com/login">
+<a href="https://sistema-gestao-frontend-xi.vercel.app/login">
     <p align="center">
         <img src="logo.png" width=45%>
     </p>
@@ -7,6 +7,7 @@
 ------------------------------------
 ## Índice
 
+* [Preview](#preview)
 * [Sobre](#sobre)
 * [Funcionalidades](#funcionalidades)
 * [Layout](#layout)
@@ -14,13 +15,18 @@
 * [Tecnologias](#tecnologias)
 * [Autor](#autor)
 * [Licença](#licenca)
-* <a href="https://sistema-gestao-frontend.herokuapp.com/login" target="_blank"> 🏪 Sistema de Gestão ---- Concluído ✅ ----</a>
 
 ------------------------------------
 
 ## 💻 Sobre <a id="sobre"></a>
 Sistema de gestão para monitar vendas e compras, gastos e ganhos de lojas/empresas/uso pessoal.
 <br>
+
+------------------------------------
+
+## 🚀 Preview <a id="preview"></a>
+
+-> https://sistema-gestao-frontend-xi.vercel.app
 
 ------------------------------------
 
@@ -35,10 +41,10 @@ Sistema de gestão para monitar vendas e compras, gastos e ganhos de lojas/empre
 
 ## 🎨 Layout <a id="layout"></a>
 
-<a href="https://sistema-gestao-frontend.herokuapp.com/login"><img src="https://img.shields.io/badge/Site-Sistema de Gestão-blue"/></a>
+<a href="https://sistema-gestao-frontend-xi.vercel.app/login"><img src="https://img.shields.io/badge/Site-Sistema de Gestão-blue"/></a>
 <img src="https://img.shields.io/badge/Backend-NodeJs-green">
 <img src="https://img.shields.io/badge/Frontend-ReactJS-green">
-<p>*O Layout completo do site está disponível (SENHA: 123)<a href="https://sistema-gestao-frontend.herokuapp.com/login">aqui</a>.</p>
+<p>*O Layout completo do site está disponível (SENHA: 123)<a href="https://sistema-gestao-frontend-xi.vercel.app/login">aqui</a>.</p>
 
 <img src="screen01.jpeg">
 <img src="screen02.jpeg">
