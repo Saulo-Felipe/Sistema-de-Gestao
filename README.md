@@ -26,7 +26,7 @@ Sistema de gestão para monitar vendas e compras, gastos e ganhos de lojas/empre
 
 ## 🚀 Preview <a id="preview"></a>
 
--> https://sistema-gestao-frontend-xi.vercel.app
+-> https://sistema-gestao-saulo.vercel.app/dashboard
 
 ------------------------------------
 
@@ -41,10 +41,10 @@ Sistema de gestão para monitar vendas e compras, gastos e ganhos de lojas/empre
 
 ## 🎨 Layout <a id="layout"></a>
 
-<a href="https://sistema-gestao-frontend-xi.vercel.app/login"><img src="https://img.shields.io/badge/Site-Sistema de Gestão-blue"/></a>
+<a href="https://sistema-gestao-saulo.vercel.app/login"><img src="https://img.shields.io/badge/Site-Sistema de Gestão-blue"/></a>
 <img src="https://img.shields.io/badge/Backend-NodeJs-green">
 <img src="https://img.shields.io/badge/Frontend-ReactJS-green">
-<p>*O Layout completo do site está disponível (SENHA: 123)<a href="https://sistema-gestao-frontend-xi.vercel.app/login">aqui</a>.</p>
+<p>*O Layout completo do site está disponível (SENHA: 123)<a href="https://sistema-gestao-saulo.vercel.app/dashboard/login">aqui</a>.</p>
 
 <img src="screen01.jpeg">
 <img src="screen02.jpeg">
